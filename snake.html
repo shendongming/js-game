@@ -1,0 +1,20 @@
+<!DOCTYPE>
+<head>
+	<meta charset="utf-8"/>
+	<title>贪吃蛇</title>
+	<script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="lib/snake.js"></script>
+	<!--
+		<script type="text/javascript" src="lib/coffee-script.js"></script>
+		<script type="text/coffeescript" src="src/snake.coffee"></script>
+	-->
+	<script type="text/javascript">
+	$(function(){
+		var snake = new SnakeView($('#game-div'),16,12)
+		snake.run()
+	})
+	</script>
+</head>
+<body>
+<div id='game-div'  style="width:400px;height:300px"></div>
+</body>
