@@ -1,0 +1,179 @@
+<html>
+
+<head>
+
+<title>拼图</title>
+<style>
+td.numTd{
+width : 20px ;
+height : 20px ;
+}
+
+div.numDiv{
+width : 100% ;
+height : 100% ;
+background-color : #000 ;
+color : #FFF ;
+text-align : center ;
+vertical-align : middle ;
+}
+</style>
+
+<script>
+var currPos = 9;
+function move(event){
+   switch(event.keyCode){
+      case 37 :
+         // 左键
+         if (currPos % 3 != 0){
+            var currTd = document.getElementById("numTd_" + currPos);
+            var nextTd = document.getElementById("numTd_" + (currPos + 1));
+            var temp = nextTd.innerHTML;
+            nextTd.innerHTML = "&nbsp;";
+            currTd.innerHTML = temp;
+            currPos ++ ;
+         }
+         break;
+      case 38 :
+         // 上键
+         if (currPos < 7){
+            var currTd = document.getElementById("numTd_" + currPos);
+            var nextTd = document.getElementById("numTd_" + (currPos + 3));
+            var temp = nextTd.innerHTML;
+            nextTd.innerHTML = "&nbsp;";
+            currTd.innerHTML = temp;
+            currPos += 3;
+         }
+         break;
+      case 39 :
+         // 右键
+         if (currPos % 3 != 1){
+            var currTd = document.getElementById("numTd_" + currPos);
+            var nextTd = document.getElementById("numTd_" + (currPos - 1));
+            var temp = nextTd.innerHTML;
+            nextTd.innerHTML = "&nbsp;";
+            currTd.innerHTML = temp;
+            currPos -- ;
+         }
+         break;
+      case 40 :
+         // 下键
+         if (currPos > 3){
+            var currTd = document.getElementById("numTd_" + currPos);
+            var nextTd = document.getElementById("numTd_" + (currPos - 3));
+            var temp = nextTd.innerHTML;
+            nextTd.innerHTML = "&nbsp;";
+            currTd.innerHTML = temp;
+            currPos -= 3;
+         }
+         break;
+      default :
+         break;
+   }
+
+   if (isWin()){
+      alert("恭喜你，过关了！");
+      initNums();
+   }
+
+}
+
+function isWin(){
+   for (i = 1; i < 9; i ++ ){
+      var numTd = document.getElementById("numTd_" + i);
+      var numDiv = numTd.getElementsByTagName("div");
+      if (i != numTd.innerText){
+         return false;
+      }
+   }
+   return true;
+
+}
+
+function initNums(){
+   var numArr = new Array(1, 2, 3, 4, 5, 6, 7, 8, 9);
+   var newNumArr = new Array();
+
+   do{
+      var tempStr = "";
+      for(i in numArr){
+         var flag = true;
+         do{
+            tempNum = numArr[parseInt(Math.random() * 100) % 9];
+            if (tempStr.search(tempNum) == -1){
+               newNumArr[i] = tempNum;
+               tempStr += tempNum;
+               flag = false;
+            }
+         }
+         while(flag);
+      }
+   }while(inverNum(newNumArr) % 2 == 0);
+
+
+   var len = newNumArr.length;
+   for(j = 0; j < len; j ++ ){
+      if (newNumArr[j] != 9){
+         document.getElementById("numTd_" + (j + 1)).innerHTML = "<div id='numDiv_"+newNumArr[j]+"' class='numDiv'>" + newNumArr[j] + "</div>";
+      }
+      else{
+         document.getElementById("numTd_" + (j + 1)).innerHTML = "&nbsp;";
+         currPos = j + 1;
+      }
+   }
+
+  // document.getElementById("output").innerText = newNumArr;
+}
+
+function inverNum(numArr){
+   var len = numArr.length;
+   var count = 0;
+   for(i = 0; i < len - 1; i ++ ){
+      for(j = i + 1; j < len; j ++ ){
+         if (numArr[j] > numArr[i]){
+            count ++ ;
+         }
+      }
+   }
+  // alert("逆序数： "+count);
+   return count;
+}
+</script>
+
+</head>
+
+<body onkeyup="move(event);" onload="initNums();">
+<table align="center">
+    <tr>
+        <td id="numTd_1" class="numTd">&nbsp;
+        </td>
+        <td id="numTd_2" class="numTd">&nbsp;
+        </td>
+        <td id="numTd_3" class="numTd">&nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td id="numTd_4" class="numTd">&nbsp;
+        </td>
+        <td id="numTd_5" class="numTd">&nbsp;
+        </td>
+        <td id="numTd_6" class="numTd">&nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td id="numTd_7" class="numTd">&nbsp;
+        </td>
+        <td id="numTd_8" class="numTd">&nbsp;
+        </td>
+        <td id="numTd_9" class="numTd">&nbsp;
+        </td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td id="output"></td>
+    </tr>
+</table>
+</body>
+
+</html>

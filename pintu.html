@@ -1,0 +1,17 @@
+<!DOCTYPE>
+<head>
+	<meta charset="utf-8"/>
+	<title>拼图</title>
+	<script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="lib/pintu.js"></script>
+	<script type="text/javascript" src="lib/pintu2.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		var snake = new PintuView($('#game-div'),3)
+		snake.run()
+	})
+	</script>
+</head>
+<body>
+<div id='game-div'  style="width:400px;height:300px"></div>
+</body>
