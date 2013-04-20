@@ -6,6 +6,7 @@ get_path 返回的是数字0的移动方向
 up , down 都是相对数字 0
 ###
 
+root = exports ? this
 
 if  not this['console']
     this['console']={
@@ -221,7 +222,7 @@ get_point = (data,p0,direct)->
  
  
 
-this.get_path=(data)->
+root.get_path=(data)->
 
     for i of flag
         delete flag[i]
@@ -250,3 +251,11 @@ this.get_path=(data)->
 #test ,暂时仅仅支持3x3的拼图
 #data=random 3   
 #this.get_path   data
+root.addEventListener('message', (e)->
+        data=e.data
+        r = root.get_path(data)
+        console.log r, 'r'
+
+        root.postMessage(r)
+    , false);
+

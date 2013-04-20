@@ -1,0 +1,44 @@
+
+<button onclick="xstartWorker()">Start worker</button>
+<output id="result"></output>
+<script>
+// Prefixed in Webkit, Chrome 12, and FF6: window.WebKitBlobBuilder, window.//MozBlobBuilder
+
+var obj={
+	onmessage:function(s){
+		alert(s);
+		postMessage('hahah'+s+'"'+"'");
+	},
+
+}
+function toStringobj(obj){
+  var s=[];
+  for ( var k in obj){
+  	s.push( k +'='+ obj[k].toString())
+
+  }
+  return s.join("\n");
+}
+
+var bb = new (window.Blob || window.MozBlobBuilder || window.WebKitBlobBuilder || window.BlobBuilder)([toStringobj(obj)]);
+
+//bb.append(data);
+//var blob = bb.getBlob();
+
+//var bb = new BlobBuilder();
+//bb.append("onmessage = function(e) { postMessage('msg from worker'); }");
+
+// Obtain a blob URL reference to our worker 'file'.
+// Note: window.webkitURL.createObjectURL() in Chrome 10+.
+var blobURL = window.URL.createObjectURL(bb);
+
+var worker = new Worker(blobURL);
+worker.onmessage = function(e) {
+  // e.data == 'msg from worker'
+  alert(e.data)
+  console.log(e)
+};
+worker.postMessage(); // Start the worker.
+
+</script>
+

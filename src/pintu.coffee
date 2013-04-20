@@ -101,13 +101,15 @@ class this.PintuView
     start_ai:()->
         if __top['Worker']
             try
-                work = new Worker('lib/work.js')
+                work = new Worker('lib/pintu2.js')
                 work.postMessage @data
-                worker.onmessage (path)=>
+                work.onmessage=(d)=>
+                    path=d.data
+                    log path,'path'
                     @demo path
                 return 
             catch e 
-                e
+                alert e
     
 
         path = get_path @data
@@ -429,7 +431,7 @@ random = (size=3)->
         log t2,'奇数'
 
 
-
+ 
 
 
 

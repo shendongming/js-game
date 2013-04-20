@@ -1,0 +1,27 @@
+
+<button onclick="xstartWorker()">Start worker</button>
+<output id="result"></output>
+<script>
+function xstartWorker()
+{
+  worker.postMessage({'cmd': 'startWorker', 'msg': 'Start now!'});
+}
+
+var worker = new Worker('worker.js');
+
+worker.addEventListener('message', function(e)
+  {
+      document.getElementById('result').textContent = e.data;
+  }
+  , false);
+</script>
+
+<script>
+function test(){
+alert('work');
+}
+
+
+
+</script>
+
